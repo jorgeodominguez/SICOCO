@@ -1,0 +1,32 @@
+version: '5.1.1'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: SICOCO
+    #restart: always
+    depends_on:
+      - postgresdb
+    ports:
+      - 8000:8000
+      # - 80:80
+    volumes:
+      - ./SICOCO:/SICOCO
+
+  postgresdb:
+    image: postgres
+    container_name: comisiones-db
+    #restart: always
+    environment:
+      POSTGRES_DB: sicoco
+      POSTGRES_USER: paraiso
+      POSTGRES_PASSWORD: Admin12345
+    volumes:
+      - postgresdb:/var/lib/postgresql
+    ports:
+      - 5432:5432
+
+volumes:
+  postgresdb:
