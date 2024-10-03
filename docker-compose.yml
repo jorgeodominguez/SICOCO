@@ -1,5 +1,3 @@
-version: '5.1.1'
-
 services:
   app:
     build:
@@ -7,26 +5,21 @@ services:
       dockerfile: ./Dockerfile
     container_name: SICOCO
     #restart: always
-    depends_on:
-      - postgresdb
     ports:
       - 8000:8000
-      # - 80:80
+    command: python3 manage.py runserver 0:8000
+    
     volumes:
-      - ./SICOCO:/SICOCO
+      - .:/SICOCO
+    depends_on:
+      - db
 
-  postgresdb:
-    image: postgres
-    container_name: comisiones-db
-    #restart: always
-    environment:
-      POSTGRES_DB: sicoco
-      POSTGRES_USER: paraiso
-      POSTGRES_PASSWORD: Admin12345
+  db:
+    image: postgres:14
     volumes:
-      - postgresdb:/var/lib/postgresql
-    ports:
-      - 5432:5432
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
 
 volumes:
-  postgresdb:
+  postgres_data:

@@ -1,4 +1,4 @@
 asgiref
 Django
-psycopg2-binary
 sqlparse
+psycopg2-binary
